@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+dist/
+*.env
+infra/certs/*.key
+infra/certs/*.crt
+infra/certs/*.csr
+backups/
+.pytest_cache/
+.superpowers/
