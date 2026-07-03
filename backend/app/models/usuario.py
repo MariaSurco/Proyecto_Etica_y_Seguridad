@@ -15,3 +15,6 @@ class Usuario(Base):
     fecha_creacion = Column(DateTime, server_default=func.now())
     failed_login_attempts = Column(Integer, default=0)
     locked_until = Column(DateTime, nullable=True)
+
+from sqlalchemy.orm import relationship
+Usuario.rol = relationship("Rol")
