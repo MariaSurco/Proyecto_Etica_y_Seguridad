@@ -4,10 +4,12 @@ import pandas as pd
 from faker import Faker
 
 # NOTE: Faker has no "es_PE" (Peru) locale in the installed version (40.28.1);
-# "es_PE" is not a valid Faker locale in any released version. Using "es_ES" as
-# the closest available Spanish-language locale to satisfy the spirit of the
-# plan's constraint (Spanish-language synthetic PII) without crashing at import.
-fake = Faker("es_ES")
+# "es_PE" is not a valid Faker locale in any released version. Using "es_MX"
+# (Mexico) as the closest available Spanish-language locale, chosen for being
+# culturally closer to the Peruvian/Latin-American context the plan intends,
+# to satisfy the spirit of the plan's constraint (Spanish-language synthetic
+# PII) without crashing at import.
+fake = Faker("es_MX")
 Faker.seed(42)
 random.seed(42)
 
