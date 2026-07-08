@@ -3,7 +3,7 @@ import pytest
 from fastapi.testclient import TestClient
 from app.main import app
 from app.database import SessionLocal
-from app.models import Usuario, Rol
+from app.models import Usuario, Rol, AuditLog
 from app.security.hashing import hash_password
 
 client = TestClient(app)
@@ -13,7 +13,11 @@ USERNAME = "carlos.test"
 
 
 def _cleanup(db):
-    """Delete the test usuario first (FK to rol), then the test rol."""
+    """Delete the test usuario's audit_log rows first (FK to usuario), then
+    the usuario itself (FK to rol), then the test rol."""
+    user = db.query(Usuario).filter(Usuario.username == USERNAME).first()
+    if user:
+        db.query(AuditLog).filter(AuditLog.usuario_id == user.usuario_id).delete()
     db.query(Usuario).filter(Usuario.username == USERNAME).delete()
     db.query(Rol).filter(Rol.nombre == ROL_NOMBRE).delete()
     db.commit()
