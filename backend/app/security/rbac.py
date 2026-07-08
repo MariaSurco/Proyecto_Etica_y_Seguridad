@@ -24,3 +24,17 @@ def require_permission(permiso_nombre: str):
             raise HTTPException(status_code=403, detail="No autorizado para este recurso")
         return user
     return dependency
+
+def require_any_permission(*permiso_nombres: str):
+    def dependency(request: Request, user: dict = Depends(get_current_user)) -> dict:
+        user_permisos = user.get("permisos", [])
+        if not any(p in user_permisos for p in permiso_nombres):
+            write_audit_log(
+                usuario_id=user.get("sub"), accion="acceso_denegado",
+                recurso=",".join(permiso_nombres), recurso_id=None,
+                ip_origen=request.client.host if request.client else None,
+                resultado="denegado", detalle=f"Falta uno de: {permiso_nombres}",
+            )
+            raise HTTPException(status_code=403, detail="No autorizado para este recurso")
+        return user
+    return dependency
