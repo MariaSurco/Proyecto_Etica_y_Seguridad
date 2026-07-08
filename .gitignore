@@ -10,3 +10,5 @@ infra/certs/*.csr
 backups/
 .pytest_cache/
 .superpowers/
+.ipynb_checkpoints/
+*.egg-info/
