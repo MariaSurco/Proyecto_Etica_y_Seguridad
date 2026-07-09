@@ -1,5 +1,7 @@
 # Análisis Inicial — Entrega Final DS3031 (Privacidad Diferencial)
 
+> **Nota de actualización:** este documento es histórico y refleja el estado del repositorio al 2026-07-03. Varias secciones marcadas como "no implementado" ya fueron resueltas posteriormente: frontend, endpoints bancarios, auditoría real, infraestructura demo y documentación operativa. Para el estado actual de ejecución usa el [README principal](../README.md), [backend/README.md](../backend/README.md), [frontend/README.md](../frontend/README.md) y [docs/GUIA_OPERATIVA.md](GUIA_OPERATIVA.md).
+
 Fecha del análisis: 2026-07-03
 Rama actual: `feature/sistema-campanas-bancarias`
 
