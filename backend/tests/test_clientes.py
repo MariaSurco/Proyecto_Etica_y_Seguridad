@@ -12,14 +12,26 @@ client = TestClient(app)
 
 PASSWORD = "Sup3rSecret!Pass"
 
-# mask_cliente (app/security/masking.py) branches on the literal role name
-# ("administrador"/"supervisor"/"analista"/"teleoperador"), so these fixture
-# roles must use those exact names for masking assertions to be meaningful.
-# Usernames stay prefixed/unique per test run; the roles are cleaned up by
-# name in `finally`, following the defensive-cleanup pattern in
-# tests/test_auth.py.
-ROL_ANALISTA = "analista"
-ROL_TELEOP = "teleoperador"
+# IMPORTANT: role names here must NOT be the literal canonical names
+# ("analista"/"teleoperador"/"administrador"/"supervisor"). Those are the
+# real roles the seed scripts create (see app/seed/generate_synthetic.py's
+# generate_roles_and_permisos() and app/seed/load_bank_csv.py), with real
+# RolPermiso mappings and real Usuario rows pointing at them via a
+# RESTRICT-on-delete FK (Usuario.rol_id). If this suite reused those literal
+# names, its setup would mutate the real roles' permissions and its teardown
+# would either fail on the FK-restricted delete or corrupt production RBAC
+# data once the DB has been seeded for real. So, like tests/test_auth.py's
+# ROL_NOMBRE = "teleoperador_test", we use namespaced, per-run role names
+# here and let the fixture create/tear down its own throwaway roles.
+#
+# Consequence: mask_cliente() (app/security/masking.py) branches on the
+# *literal* role-name string, so with a namespaced role it always falls
+# through to the "unknown role" branch (cliente_id + deposit only) rather
+# than exercising the analista/teleoperador-specific PII rules. Exact
+# masking *content* per canonical role is already covered by
+# tests/test_masking.py; the tests below only assert on this router's own
+# job (opt-in filtering, assignment-based authorization, audit-worthy
+# 403/404), not on masking content re-derived from the role string.
 
 
 def _make_permiso(db, nombre, recurso, accion):
@@ -76,8 +88,8 @@ def _make_cliente(db, estado_consentimiento):
 def scenario():
     db = SessionLocal()
     prefix = f"clitest_{uuid.uuid4().hex[:8]}"
-    analista, rol_analista = _make_user(db, ROL_ANALISTA, f"{prefix}.analista", ["clientes:ver_parcial"])
-    teleop, rol_teleop = _make_user(db, ROL_TELEOP, f"{prefix}.teleop", ["clientes:ver_asignados"])
+    analista, rol_analista = _make_user(db, f"{prefix}_analista", f"{prefix}.analista", ["clientes:ver_parcial"])
+    teleop, rol_teleop = _make_user(db, f"{prefix}_teleop", f"{prefix}.teleop", ["clientes:ver_asignados"])
     opt_in = _make_cliente(db, "opt-in")
     opt_out = _make_cliente(db, "opt-out")
     campania = Campania(campania_id=uuid.uuid4(), nombre="Campania Test", producto="deposito",
@@ -123,7 +135,7 @@ def test_teleoperador_only_sees_assigned_clients(scenario):
     token = _login(scenario["teleop"].username)
     resp_ok = client.get(f"/clientes/{scenario['opt_in'].cliente_id}", headers={"Authorization": f"Bearer {token}"})
     assert resp_ok.status_code == 200
-    assert resp_ok.json()["nombre"] == "Cliente Test"
+    assert resp_ok.json()["cliente_id"] == str(scenario["opt_in"].cliente_id)
 
     resp_forbidden = client.get(f"/clientes/{scenario['opt_out'].cliente_id}", headers={"Authorization": f"Bearer {token}"})
     assert resp_forbidden.status_code == 403

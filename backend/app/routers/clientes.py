@@ -61,6 +61,11 @@ def obtener_cliente(
     permisos = user.get("permisos", [])
     permisos_validos = {"clientes:ver_sensible", "clientes:ver_parcial", "clientes:ver_asignados"}
     if not permisos_validos & set(permisos):
+        write_audit_log(
+            usuario_id=user["sub"], accion="acceso_denegado", recurso="clientes",
+            recurso_id=str(cliente_id), ip_origen=request.client.host if request.client else None,
+            resultado="denegado", detalle="Sin permisos sobre clientes",
+        )
         raise HTTPException(status_code=403, detail="No autorizado para este recurso")
 
     cliente = db.query(Cliente).filter(Cliente.cliente_id == cliente_id).first()
