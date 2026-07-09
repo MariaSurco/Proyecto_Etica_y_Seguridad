@@ -94,7 +94,7 @@ export function Explorar() {
                       fontSize: 12,
                     }}
                     labelFormatter={(label) => `Tamaño de grupo ${label}`}
-                    formatter={(value: number) => [`${value.toLocaleString("es-PE")} combinaciones`, ""]}
+                    formatter={(value) => [`${Number(value ?? 0).toLocaleString("es-PE")} combinaciones`, ""]}
                   />
                   <Bar dataKey="count" fill="var(--chart-1)" radius={[4, 4, 0, 0]} />
                 </BarChart>

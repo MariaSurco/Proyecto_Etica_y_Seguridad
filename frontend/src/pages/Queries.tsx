@@ -27,6 +27,12 @@ function formatNumber(n: number): string {
   return n.toLocaleString("es-PE", { maximumFractionDigits: 2 })
 }
 
+type QueryChartDatum = {
+  name: string | number
+  real: number
+  dp: number
+}
+
 export function Queries() {
   const [queryType, setQueryType] = useState<QueryType>("mean_balance")
   const [epsilon, setEpsilon] = useState(1.0)
@@ -47,7 +53,7 @@ export function Queries() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryType])
 
-  const chartData = (() => {
+  const chartData: QueryChartDatum[] = (() => {
     if (!result) return []
     if (result.query_type === "mean_balance") return []
     if (result.query_type === "histogram_age") {
