@@ -28,8 +28,7 @@ export function Explorar() {
     return (
       <Card>
         <CardContent className="pt-5 text-sm text-muted-foreground">
-          No hay datos disponibles. Verifica que el backend FastAPI esté corriendo en{" "}
-          <code className="font-mono">http://localhost:8000</code>.
+          No hay datos disponibles. Verifica que el backend FastAPI esté corriendo y sea accesible desde esta URL.
         </CardContent>
       </Card>
     )

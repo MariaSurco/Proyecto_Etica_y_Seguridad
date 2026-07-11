@@ -28,12 +28,16 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    volumes:
+      - ../bank.csv:/bank.csv:ro
     expose:
       - "8000"
 
   frontend:
     build:
       context: ../frontend
+      args:
+        VITE_API_BASE_URL: ""
     depends_on:
       - backend
     expose:
