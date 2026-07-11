@@ -60,6 +60,13 @@ export interface DPComparison {
   points: DPModelMetrics[]
 }
 
+export interface DemoUsuario {
+  username: string
+  nombre_completo: string
+  rol: string
+  activo: boolean
+}
+
 export interface LoginResponse {
   access_token: string
   token_type: string
@@ -259,6 +266,8 @@ export const api = {
     }),
 
   getDpComparison: () => request<DPComparison>("/api/dp/comparison"),
+
+  getDemoUsuarios: () => request<DemoUsuario[]>("/api/demo/usuarios"),
 }
 
 export { ApiError }

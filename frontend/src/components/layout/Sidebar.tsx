@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { Compass, SlidersHorizontal, BrainCircuit, TrendingUp, HeartHandshake, ShieldCheck } from "lucide-react"
+import { Compass, SlidersHorizontal, BrainCircuit, TrendingUp, HeartHandshake, ShieldCheck, Landmark, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const NAV_ITEMS = [
@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { to: "/queries", label: "Queries con DP", icon: SlidersHorizontal },
   { to: "/modelo", label: "Modelo con DP", icon: BrainCircuit },
   { to: "/trade-off", label: "Trade-off", icon: TrendingUp },
-  { to: "/etica", label: "Sobre el proyecto", icon: HeartHandshake },
+  { to: "/etica", label: "Resumen de proyecto", icon: HeartHandshake },
 ]
 
 export function Sidebar() {
@@ -44,11 +44,31 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="px-5 py-4 text-[11px] text-muted-foreground">
-        DS3031 — Ética y Seguridad de Datos
-        <br />
-        UTEC · Grupo 1
+      <div className="flex flex-col gap-1 border-t border-border px-3 py-3">
+        <NavLink
+          to="/usuarios"
+          className={({ isActive }) =>
+            cn(
+              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-150",
+              isActive
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
+            )
+          }
+        >
+          <Users className="h-4 w-4 shrink-0" />
+          Usuarios del sistema
+        </NavLink>
+        <NavLink
+          to="/banca"
+          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors duration-150 hover:bg-surface-muted hover:text-foreground"
+        >
+          <Landmark className="h-4 w-4 shrink-0" />
+          Operación bancaria
+        </NavLink>
       </div>
+
+      <div className="px-5 py-4 text-[11px] text-muted-foreground">Mishelle · Mafer · Angel</div>
     </aside>
   )
 }

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { Compass, SlidersHorizontal, BrainCircuit, TrendingUp, HeartHandshake } from "lucide-react"
+import { Compass, SlidersHorizontal, BrainCircuit, TrendingUp, HeartHandshake, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const NAV_ITEMS = [
@@ -7,7 +7,8 @@ const NAV_ITEMS = [
   { to: "/queries", label: "Queries", icon: SlidersHorizontal },
   { to: "/modelo", label: "Modelo", icon: BrainCircuit },
   { to: "/trade-off", label: "Trade-off", icon: TrendingUp },
-  { to: "/etica", label: "Ética", icon: HeartHandshake },
+  { to: "/etica", label: "Resumen", icon: HeartHandshake },
+  { to: "/usuarios", label: "Usuarios", icon: Users },
 ]
 
 export function MobileNav() {

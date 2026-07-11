@@ -68,3 +68,10 @@ class DPModelResponse(BaseModel):
 class DPComparisonResponse(BaseModel):
     baseline: BaselineMetrics
     points: list[DPModelMetrics]
+
+
+class DemoUsuario(BaseModel):
+    username: str
+    nombre_completo: str
+    rol: str
+    activo: bool

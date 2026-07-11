@@ -131,8 +131,7 @@ export function TradeOff() {
             </ResponsiveContainer>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">
-            Líneas punteadas: valor del baseline sin privacidad para cada métrica. Interpretación completa en{" "}
-            <code className="font-mono">docs/INFORME_FINAL.md</code>, sección 6.5.
+            Líneas punteadas: valor del baseline sin privacidad para cada métrica.
           </p>
         </CardContent>
       </Card>

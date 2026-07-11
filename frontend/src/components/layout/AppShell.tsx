@@ -21,8 +21,12 @@ const TITLES: Record<string, { title: string; subtitle: string }> = {
     subtitle: "Curva ε vs. desempeño del modelo y fairness",
   },
   "/etica": {
-    title: "Sobre el proyecto",
-    subtitle: "Marco ético, DPIA y referencias del curso DS3031",
+    title: "Resumen de proyecto",
+    subtitle: "Marco ético y principios de diseño del sistema",
+  },
+  "/usuarios": {
+    title: "Usuarios del sistema",
+    subtitle: "Credenciales de demo y permisos por rol",
   },
 }
 

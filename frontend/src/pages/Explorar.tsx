@@ -102,8 +102,7 @@ export function Explorar() {
             </div>
             <p className="mt-2 text-xs text-muted-foreground">
               {kAnon.pct_unique.toFixed(1)}% de registros son únicos (k=1), {kAnon.pct_k_lt5.toFixed(1)}% tienen k&lt;5,{" "}
-              {kAnon.pct_k_lt10.toFixed(1)}% tienen k&lt;10. Detalle completo en{" "}
-              <code className="font-mono">notebooks/01_privacidad_diferencial.ipynb</code>, sección 4.2.
+              {kAnon.pct_k_lt10.toFixed(1)}% tienen k&lt;10.
             </p>
           </CardContent>
         </Card>

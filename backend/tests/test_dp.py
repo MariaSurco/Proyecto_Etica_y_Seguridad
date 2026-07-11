@@ -66,3 +66,13 @@ def test_dp_comparison_has_all_epsilons():
     data = resp.json()
     assert len(data["points"]) == 6
     assert "baseline" in data
+
+
+def test_demo_usuarios_lists_all_roles():
+    resp = client.get("/api/demo/usuarios")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert len(data) > 0
+    roles = {u["rol"] for u in data}
+    assert roles == {"administrador", "supervisor", "analista", "teleoperador"}
+    assert all(u["username"] and u["nombre_completo"] for u in data)
