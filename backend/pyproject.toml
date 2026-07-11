@@ -30,5 +30,8 @@ notebook = [
     "ipykernel>=6.29",
 ]
 
+[tool.setuptools.packages.find]
+include = ["app*"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
